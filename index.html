@@ -12,52 +12,64 @@
 <body>
   <div class="container">
     <section id="sectionForm" class="jumbotron mt-5">
-      <form action="">
+      <form id="formCaseAdd" action="">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="inputCaseNum">Numer sprawy</label>
-              <input type="number" class="form-control" id="inputCaseNum" placeholder="Numer sprawy">
+              <label for="inputFormCaseNumber">Numer sprawy</label>
+              <input type="number" class="form-control" name="caseNumber" id="inputFormCaseNumber" placeholder="Numer sprawy">
             </div>
             <div class="form-group">
-              <label for="inputClientFirstName">Imię</label>
-              <input type="text" class="form-control" id="inputClientFirstName" placeholder="Imię">
+              <label for="inputFormFirstName">Imię</label>
+              <input type="text" class="form-control" name="firstName" id="inputFormFirstName" placeholder="Imię">
             </div>
             <div class="form-group">
-              <label for="inputCasePlace">Miejsce</label>
-              <input type="text" class="form-control" id="inputCasePlace" placeholder="Miejsce">
+              <label for="inputFormCasePlace">Miejsce</label>
+              <input type="text" class="form-control" name="place" id="inputFormCasePlace" placeholder="Miejsce">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="inputCasePerson">Osoba przyjmująca sprawę</label>
-              <select class="form-control" id="inputCasePerson">
+              <label for="inputFormCasePerson">Osoba przyjmująca sprawę</label>
+              <select class="form-control" name="person" id="inputFormCasePerson">
                 <option disabled selected value> --wybierz-- </option>
-                <option value="osoba1">osoba1</option>
-                <option value="osoba2">osoba2</option>
-                <option value="osoba3">osoba3</option>
-                <option value="osoba4">osoba4</option>
+                <option value="Mateusz">Mateusz</option>
+                <option value="Anna">Anna</option>
+                <option value="Katarzyna">Katarzyna</option>
+                <option value="Wojciech">Wojciech</option>
+                <option value="Jagoda">Jagoda</option>
+                <option value="Karolina">Karolina</option>
+                <option value="Monika">Monika</option>
+                <option value="Piotr">Piotr</option>
+                <option value="Agnieszka">Agnieszka</option>
+                <option value="Adrianna">Adrianna</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="inputClientLastName">Nazwisko</label>
-              <input type="text" class="form-control" id="inputClientLastName" placeholder="Nazwisko">
+              <label for="inputFormLastName">Nazwisko</label>
+              <input type="text" class="form-control" name="lastName" id="inputFormLastName" placeholder="Nazwisko">
             </div>
             <div class="form-group">
-              <label for="inputCaseDate">Data</label>
-              <input type="date" class="form-control" id="inputCaseDate" placeholder="Data">
+              <label for="inputFormCaseDate">Data</label>
+              <input type="date" class="form-control" name="date" id="inputFormCaseDate" placeholder="Data">
             </div>
           </div>
         </div>
         <div class="form-group">
-          <label for="inputCaseInfo">Opis</label>
-          <textarea class="form-control" id="inputCaseInfo" placeholder="Opis" rows="3"></textarea>
+          <label for="inputFormCaseDesc">Opis</label>
+          <textarea class="form-control" name="describe" id="inputFormCaseDesc" placeholder="Opis" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary float-right">Dodaj</button>
+        <button id="btn" type="submit" class="btn btn-primary float-right">Dodaj</button>
       </form>
     </section>
+
+    
+
   </div>
-  </div>
+
+  <script src="assets/js/jquery-3.2.1.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>
