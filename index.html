@@ -7,6 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>FORM</title>
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/footable.bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" />
 </head>
 
 <body>
@@ -63,12 +65,34 @@
       </form>
     </section>
 
-    
-
+    <section id="sectionTable" class="jumbotron mt-5">
+      <table class="table table-sm">
+      	<thead>
+        	<tr>
+        		<th data-type="number">Numer sprawy</th>
+        		<th>Imię</th>
+        		<th>Nazwisko</th>
+        		<th>Data</th>
+        		<th>Miejsce</th>
+        		<th>Osoba przyjmująca sprawę</th>
+        		<th>Opis</th>
+        	</tr>
+      	</thead>
+      	<tbody id="tableBodyData">
+        </tbody>
+      </table>
+    </section>
   </div>
 
   <script src="assets/js/jquery-3.2.1.min.js"></script>
+  <script src="assets/js/moment.min.js"></script>
+  <script src="assets/js/footable.min.js"></script>
   <script src="assets/js/main.js"></script>
+  <script>
+    jQuery(function($){
+      $('.table').footable();
+    });
+  </script>
 
 </body>
 

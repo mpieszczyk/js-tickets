@@ -9,10 +9,11 @@
          alert("Pola nie mogą być puste");
 
        } else {
-         // get data from inputs
+         // create empty object
          var jsonData = {};
+         // get data from inputs
          var formData = $("#formCaseAdd").serializeArray();
-
+         // add data to object
          $.each(formData, function() {
 
            if (jsonData[this.name]) {
@@ -25,7 +26,7 @@
            }
 
          });
-         // send data to mongoDB
+         // send object to mongoDB
          $.ajax({
            url: "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy",
            type: "POST",
@@ -43,23 +44,46 @@
   function getData() {
     $.ajax({
       url: "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy"
-    }).done(function(data) {
-      console.log(data);
+    }).done(function(tableData) {
+        // console.log(tableData);
+      var output;
+      $.each(tableData, function(key, tableData){
+        output += "<tr>";
+        output += "<td style='display: table-cell;'>" + tableData.caseNumber + "</td>";
+        output += "<td style='display: table-cell;'>" + tableData.firstName + "</td>";
+        output += "<td style='display: table-cell;'>" + tableData.lastName + "</td>";
+        output += "<td style='display: table-cell;'>" + tableData.date + "</td>";
+        output += "<td style='display: table-cell;'>" + tableData.place + "</td>";
+        output += "<td style='display: table-cell;'>" + tableData.person + "</td>";
+        output += "<td style='display: table-cell;'>" + tableData.describe + "</td>";
+        output += "</tr>";
+      });
+
+      $("#tableBodyData").html(output);
     });
   }
 
-  // get button
-  $("#btn").click(function(e){
-    // form reload lock
-    e.preventDefault();
 
-    postData();
-
-    // reset form inputs
-    $("#formCaseAdd").find("input, select, textarea").val("");
+  $(document).ready(function(){
 
     getData();
 
+    // get button
+    $("#btn").click(function(e){
+      // form reload lock
+      e.preventDefault();
+
+      postData();
+
+      getData();
+
+      // reset form inputs
+      $("#formCaseAdd").find("input, select, textarea").val("");
+
+
+
+    });
   });
+
 
 })();
