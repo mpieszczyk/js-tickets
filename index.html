@@ -7,33 +7,34 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>FORM</title>
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="assets/css/footable.bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" />
 </head>
 
 <body>
   <div class="container">
-    <section id="sectionForm" class="jumbotron mt-5">
-      <form id="formCaseAdd" action="">
-        <div class="row">
+    <section id="sectionForm" class="card text-primary card border-primary mt-5">
+      <form id="formCaseAdd" class="card-body">
+        <button id="formHide" class="btn btn-secondary hidden">ROZWIŃ FORMULARZ</i></button>
+        <hr />
+        <div class="row d-none">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="inputFormCaseNumber">Numer sprawy</label>
-              <input type="number" class="form-control" name="caseNumber" id="inputFormCaseNumber" placeholder="Numer sprawy">
+              <label class="col-form-label" for="inputFormCaseNumber">Nr sprawy</label>
+              <input type="number" class="form-control form-control-sm" name="caseNumber" id="inputFormCaseNumber" placeholder="Numer sprawy">
             </div>
             <div class="form-group">
-              <label for="inputFormFirstName">Imię</label>
-              <input type="text" class="form-control" name="firstName" id="inputFormFirstName" placeholder="Imię">
+              <label class="col-form-label" for="inputFormFirstName">Imię</label>
+              <input type="text" class="form-control form-control-sm" name="firstName" id="inputFormFirstName" placeholder="Imię">
             </div>
             <div class="form-group">
-              <label for="inputFormCasePlace">Miejsce</label>
-              <input type="text" class="form-control" name="place" id="inputFormCasePlace" placeholder="Miejsce">
+              <label class="col-form-label" for="inputFormCasePlace">Miejsce</label>
+              <input type="text" class="form-control form-control-sm" name="place" id="inputFormCasePlace" placeholder="Miejsce">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="inputFormCasePerson">Osoba przyjmująca sprawę</label>
-              <select class="form-control" name="person" id="inputFormCasePerson">
+              <label class="col-form-label" for="inputFormCasePerson">Osoba przyjmująca sprawę</label>
+              <select class="form-control form-control-sm" name="person" id="inputFormCasePerson">
                 <option disabled selected value> --wybierz-- </option>
                 <option value="Mateusz">Mateusz</option>
                 <option value="Anna">Anna</option>
@@ -48,34 +49,38 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="inputFormLastName">Nazwisko</label>
-              <input type="text" class="form-control" name="lastName" id="inputFormLastName" placeholder="Nazwisko">
+              <label class="col-form-label" for="inputFormLastName">Nazwisko</label>
+              <input type="text" class="form-control form-control-sm" name="lastName" id="inputFormLastName" placeholder="Nazwisko">
             </div>
             <div class="form-group">
-              <label for="inputFormCaseDate">Data</label>
-              <input type="date" class="form-control" name="date" id="inputFormCaseDate" placeholder="Data">
+              <label class="col-form-label" for="inputFormCaseDate">Data</label>
+              <input type="date" class="form-control form-control-sm" name="date" id="inputFormCaseDate" placeholder="Data">
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="inputFormCaseDesc">Opis</label>
-          <textarea class="form-control" name="describe" id="inputFormCaseDesc" placeholder="Opis" rows="3"></textarea>
+        <div class="row d-none">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="col-form-label" for="inputFormCaseDesc">Opis</label>
+              <textarea class="form-control form-control-sm" name="describe" id="inputFormCaseDesc" placeholder="Opis" rows="3"></textarea>
+            </div>
+            <button id="btn" type="submit" class="btn btn-primary float-right">Dodaj</button>
+          </div>
         </div>
-        <button id="btn" type="submit" class="btn btn-primary float-right">Dodaj</button>
       </form>
     </section>
 
-    <section id="sectionTable" class="jumbotron mt-5">
-      <table class="table table-sm">
-      	<thead>
+    <section id="sectionTable" class="card text-black bg-light mt-5">
+      <table class="table table-responsive card-body ">
+      	<thead class="bg-primary text-white">
         	<tr>
-        		<th data-type="number">Numer sprawy</th>
-        		<th>Imię</th>
-        		<th>Nazwisko</th>
-        		<th>Data</th>
-        		<th>Miejsce</th>
-        		<th>Osoba przyjmująca sprawę</th>
-        		<th>Opis</th>
+        		<th scope="col" data-type="number">Nr</th>
+        		<th scope="col">Imię</th>
+        		<th scope="col">Nazwisko</th>
+        		<th scope="col">Data</th>
+        		<th scope="col">Miejsce</th>
+        		<th scope="col">Przyjmująca/y</th>
+        		<th scope="col">Opis</th>
         	</tr>
       	</thead>
       	<tbody id="tableBodyData">
@@ -85,15 +90,8 @@
   </div>
 
   <script src="assets/js/jquery-3.2.1.min.js"></script>
-  <script src="assets/js/moment.min.js"></script>
-  <script src="assets/js/footable.min.js"></script>
   <script src="assets/js/main.js"></script>
-  <script>
-    jQuery(function($){
-      $('.table').footable();
-    });
-  </script>
-
+  <script src="assets/js/view.js"></script>
 </body>
 
 </html>

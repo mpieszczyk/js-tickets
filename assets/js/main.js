@@ -48,7 +48,7 @@
         // console.log(tableData);
       var output;
       $.each(tableData, function(key, tableData){
-        output += "<tr>";
+        output += "<tr class='table-active'>";
         output += "<td style='display: table-cell;'>" + tableData.caseNumber + "</td>";
         output += "<td style='display: table-cell;'>" + tableData.firstName + "</td>";
         output += "<td style='display: table-cell;'>" + tableData.lastName + "</td>";
