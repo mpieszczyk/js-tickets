@@ -60,9 +60,9 @@
       });
 
       $("#tableBodyData").html(output);
+      
     });
   }
-
 
   $(document).ready(function(){
 
@@ -72,17 +72,12 @@
     $("#btn").click(function(e){
       // form reload lock
       e.preventDefault();
-
       postData();
-
       getData();
-
       // reset form inputs
       $("#formCaseAdd").find("input, select, textarea").val("");
-
-
-
     });
+
   });
 
 

@@ -12,9 +12,12 @@
 
 <body>
   <div class="container">
+
+    <!-- form section -->
     <section id="sectionForm" class="card text-primary card border-primary mt-5">
       <form id="formCaseAdd" class="card-body">
-        <button id="formHide" class="btn btn-secondary hidden">ROZWIŃ FORMULARZ</i></button>
+        <button id="formHide" class="btn btn-secondary hidden"><span id="buttonLabel">ROZWIŃ FORMULARZ</span>&nbsp;<i class="fa fa-angle-double-down" aria-hidden="true"></i>
+</button>
         <hr />
         <div class="row d-none">
           <div class="col-md-6">
@@ -70,8 +73,9 @@
       </form>
     </section>
 
-    <section id="sectionTable" class="card text-black bg-light mt-5">
-      <table class="table table-responsive card-body ">
+    <!-- table section -->
+    <section id="sectionTable" class="card text-primary card border-primary text-muted mt-5">
+      <table class="table table-responsive card-body">
       	<thead class="bg-primary text-white">
         	<tr>
         		<th scope="col" data-type="number">Nr</th>
@@ -86,9 +90,40 @@
       	<tbody id="tableBodyData">
         </tbody>
       </table>
+
+      <!-- pagination -->
+      <nav class="card-body form-row">
+        <ul class="pagination col-md-9">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Poprzednia</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Następna</span>
+            </a>
+          </li>
+        </ul>
+        <div class="form-group bg-secondary form-row">
+          <label class="col-form-label col-form-label-sm col-md-6" for="numOfRows">Ilość wierszy&nbsp;</label>
+          <select class="form-control form-control-sm col-md-6" name="numOfRows" id="numOfRows">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="9999999999">Wszystkie</option>
+          </select>
+        </div>
+      </nav>
     </section>
   </div>
 
+  <!-- scripts -->
   <script src="assets/js/jquery-3.2.1.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/view.js"></script>
