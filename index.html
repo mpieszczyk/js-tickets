@@ -75,40 +75,28 @@
 
     <!-- table section -->
     <section id="sectionTable" class="card text-primary card border-primary text-muted mt-5">
-      <table class="table table-responsive card-body">
-      	<thead class="bg-primary text-white">
-        	<tr>
-        		<th scope="col" data-type="number">Nr</th>
-        		<th scope="col">Imię</th>
-        		<th scope="col">Nazwisko</th>
-        		<th scope="col">Data</th>
-        		<th scope="col">Miejsce</th>
-        		<th scope="col">Przyjmująca/y</th>
-        		<th scope="col">Opis</th>
-        	</tr>
-      	</thead>
-      	<tbody id="tableBodyData">
-        </tbody>
-      </table>
+      <div class="table-responsive card-body">
+        <table id="myTab" class="table">
+        	<thead class="bg-primary text-white">
+          	<tr>
+          		<th scope="col" data-type="number">Nr</th>
+          		<th scope="col">Imię</th>
+          		<th scope="col">Nazwisko</th>
+          		<th scope="col">Data&nbsp;zdarzenia</th>
+          		<th scope="col">Miejsce</th>
+          		<th scope="col">Przyjmująca/y</th>
+          		<th scope="col">Opis</th>
+              <th scope="col">Opcje</th>
+          	</tr>
+        	</thead>
+        	<tbody id="tableBodyData">
+          </tbody>
+        </table>
+      </div>
 
       <!-- pagination -->
       <nav class="card-body form-row">
-        <ul class="pagination col-md-9">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Poprzednia</span>
-            </a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Następna</span>
-            </a>
-          </li>
+        <ul class="pagination col-md-10">
         </ul>
         <div class="form-group bg-secondary form-row">
           <label class="col-form-label col-form-label-sm col-md-6" for="numOfRows">Ilość wierszy&nbsp;</label>
