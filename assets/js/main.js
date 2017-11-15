@@ -60,51 +60,64 @@
       })
 
       $("#tableBodyData").html(output)
-      addTabPagin()
-      changeTabPagin()
+      tablePagination()
     })
   }
 
   // table pagination
-  function addTabPagin() {
-    var trnum = 0,
-    maxRows = parseInt($("#numOfRows").val()),
-    totalRows = $("#myTab tbody tr").length
-    $("#myTab tr:gt(0)").each(function() {
-      trnum++
-      if ( trnum > maxRows ) {
-        $(this).hide()
-      } else if ( trnum <= maxRows ) {
-        $(this).show()
-      }
-    })
-    if( totalRows > maxRows ) {
-      var pagenum = Math.ceil(totalRows/maxRows)
-      for(var i=1;i<=pagenum;) {
-        $(".pagination").append("<li class='page-item' data-page=" + i + ">\<a style='user-select: none;'' class='page-link'>" + i++ + "</a>\</li>").show()
-      }
-    } else {
-      $(".pagination").html("")
-    }
-    $(".pagination li:first-child").addClass("active")
-  }
+  function tablePagination() {
 
-  function changeTabPagin() {
-    $(".pagination li").on("click",function() {
-      var pagenum = $(this).attr("data-page"),
+    function hideTabRows() {
+      var trnum = 0,
       maxRows = parseInt($("#numOfRows").val()),
-      trIndex = 0
-      $(".pagination li").removeClass("active")
-      $(this).addClass("active")
+      totalRows = $("#myTab tbody tr").length
       $("#myTab tr:gt(0)").each(function() {
-        trIndex++
-        if( trIndex > (maxRows*pagenum) || trIndex <= ((maxRows*pagenum)-maxRows) ) {
+        trnum++
+        if ( trnum > maxRows ) {
           $(this).hide()
-        } else {
+        } else if ( trnum <= maxRows ) {
           $(this).show()
         }
       })
-    })
+    }
+
+    function addTabPagin() {
+      var maxRows = parseInt($("#numOfRows").val()),
+      totalRows = $("#myTab tbody tr").length
+      if( totalRows > maxRows ) {
+        var pagenum = Math.ceil(totalRows/maxRows)
+        for(var i = 1; i <= pagenum;) {
+          $(".pagination").append("<li class='page-item' data-page=" + i + ">\<a style='user-select: none;'' class='page-link'>" + i++ + "</a>\</li>").show()
+        }
+      } else {
+        $(".pagination").html("")
+      }
+      $(".pagination li:first-child").addClass("active")
+    }
+
+    function changeTabPagin() {
+      $(".pagination li").on("click",function() {
+        var pagenum = $(this).attr("data-page"),
+        maxRows = parseInt($("#numOfRows").val()),
+        trIndex = 0
+        $(".pagination li").removeClass("active")
+        $(this).addClass("active")
+        $("#myTab tr:gt(0)").each(function() {
+          trIndex++
+          if( trIndex > (maxRows*pagenum) || trIndex <= ((maxRows*pagenum)-maxRows) ) {
+            $(this).hide()
+          } else {
+            $(this).show()
+          }
+        })
+      })
+    }
+
+    hideTabRows()
+    $(".pagination").html("")
+    addTabPagin()
+    changeTabPagin()
+
   }
 
   $(document).ready(function() {
@@ -122,8 +135,7 @@
     });
 
     $("#numOfRows").on("change", function() {
-      addTabPagin()
-      changeTabPagin()
+      tablePagination()
     })
 
   });
