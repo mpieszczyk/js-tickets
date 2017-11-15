@@ -60,17 +60,17 @@
       })
 
       $("#tableBodyData").html(output)
-      tabPagin()
+      addTabPagin()
+      changeTabPagin()
     })
   }
 
   // table pagination
-  function tabPagin() {
-    var table = "#myTab",
-    trnum = 0,
+  function addTabPagin() {
+    var trnum = 0,
     maxRows = parseInt($("#numOfRows").val()),
-    totalRows = $(table+" tbody tr").length
-    $(table + "tr:gt(0)").each(function() {
+    totalRows = $("#myTab tbody tr").length
+    $("#myTab tr:gt(0)").each(function() {
       trnum++
       if ( trnum > maxRows ) {
         $(this).hide()
@@ -85,15 +85,18 @@
       }
     } else {
       $(".pagination").html("")
-      $(table + " tr:gt(0)").show
     }
     $(".pagination li:first-child").addClass("active")
-    $(".pagination li").on("click",function(){
+  }
+
+  function changeTabPagin() {
+    $(".pagination li").on("click",function() {
       var pagenum = $(this).attr("data-page"),
+      maxRows = parseInt($("#numOfRows").val()),
       trIndex = 0
       $(".pagination li").removeClass("active")
       $(this).addClass("active")
-      $(table + " tr:gt(0)").each(function(){
+      $("#myTab tr:gt(0)").each(function() {
         trIndex++
         if( trIndex > (maxRows*pagenum) || trIndex <= ((maxRows*pagenum)-maxRows) ) {
           $(this).hide()
@@ -106,7 +109,7 @@
 
   $(document).ready(function() {
 
-    getData();
+    getData()
 
     // get button
     $("#btn").click(function(e){
@@ -115,11 +118,12 @@
       postData()
       getData()
       // reset form inputs
-      $("#formCaseAdd").find("input, select, textarea").val("");
+      $("#formCaseAdd").find("input, select, textarea").val("")
     });
 
     $("#numOfRows").on("change", function() {
-      tabPagin()
+      addTabPagin()
+      changeTabPagin()
     })
 
   });
