@@ -1,22 +1,26 @@
 (function() {
 
 //post data to db
-    function postData() {
+    function addData() {
+
       // select form inputs
       $(":input select, textarea").each(function() {
+
         // inputs simple validation
         if ($(this).val() === "") {
 
           alert("Pola nie mogą być puste")
 
         } else {
+
           // create empty object
           var jsonData = {};
+
           // get data from inputs
           var formData = $("#formCaseAdd").serializeArray();
+
           // add data to object
           $.each(formData, function() {
-
             if (jsonData[this.name]) {
               if (!jsonData[this.name].push) {
                 jsonData[this.name] = [jsonData[this.name]];
@@ -27,48 +31,123 @@
             }
 
           });
+
+          // session storage value check
+          if(sessionStorage.getItem("currentCaseId") != null) {
+
+            // set put metod for edit date
+            var id = sessionStorage.getItem("currentCaseId"),
+                url = "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items/" + id + "?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy",
+                type = "PUT";
+          } else {
+
+            // set post method for add data
+            var url = "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy",
+                type = "POST";
+            $("#btn").html("DODAJ");
+          }
+
           // send object to mongoDB
           $.ajax({
-            url: "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy",
-            type: "POST",
+            url: url,
+            type: type,
             data: JSON.stringify(jsonData),
             contentType: "application/json;charset=utf-8"
           }).done(function(msg) {
-            alert("Dodano!")
+            alert("Dodano!");
+            getData();
           });
 
         }
-
       });
     }
 //=============================================================================
 //=============================================================================
 
-// get db data
+// edit data
+    function editData() {
+
+      // get data to edit
+      $("body").on("click", "#setCase", function(e){
+        e.preventDefault();
+        $("#formCaseAdd").find(".row").removeClass("d-none");
+
+        // fill form by downloaded data
+        sessionStorage.setItem("currentCaseId", $(this).data("id"));
+        $("#inputFormCaseNumber").val($(this).data("casenum"));
+        $("#inputFormFirstName").val($(this).data("fname"));
+        $("#inputFormLastName").val($(this).data("lname"));
+        $("#inputFormCaseDate").val($(this).data("date"));
+        $("#inputFormCasePlace").val($(this).data("place"));
+        $("#inputFormCasePerson").val($(this).data("person"));
+        $("#inputFormCaseDesc").val($(this).data("describe"));
+
+        // change button label
+        $("#btn").html("AKTUALIZUJ");
+      })
+    }
+//=============================================================================
+//=============================================================================
+
+// delete data
+    function delData() {
+
+      // get data to del
+      $("body").on("click", "#delCase", function(e){
+        e.preventDefault();
+
+        var id = $(this).data('id'),
+            url = "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items/" + id + "?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy";
+
+        // del object from mongoDB
+        $.ajax({
+          url: url,
+          type: "DELETE",
+          async: true,
+          timeout: 300000
+        }).done(function(msg) {
+          alert("Usunięto!");
+          getData();
+        });
+      })
+    }
+//=============================================================================
+//=============================================================================
+
+// get data from db
     function getData() {
       $.ajax({
         url: "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy"
       }).done(function(tableData) {
         var output;
+
+        // create table cells and fill them with data
         $.each(tableData, function(key, tableData) {
+
+          var editBtn = "<a id='setCase' href='' data-id='" +tableData._id.$oid+ "' data-casenum='" +tableData.casenum+ "' data-fname='" +tableData.fname+ "' data-lname='" +tableData.lname+ "' data-date='" +tableData.date+ "' data-place='" +tableData.place+ "' data-person='" +tableData.person+ "' data-describe='" +tableData.describe+ "'><i class='fa fa-pencil-square fa-lg' aria-hidden='true'></i></a>";
+
+          var delBtn = "<a id='delCase' href='' data-id='" +tableData._id.$oid+ "'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></a></td>";
+
           output += "<tr class='table-active'>";
-          output += "<td style='display: table-cell;'>" + tableData.caseNumber + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.firstName + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.lastName + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.casenum + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.fname + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.lname + "</td>";
           output += "<td style='display: table-cell;'>" + tableData.date + "</td>";
           output += "<td style='display: table-cell;'>" + tableData.place + "</td>";
           output += "<td style='display: table-cell;'>" + tableData.person + "</td>";
           output += "<td style='display: table-cell;'>" + tableData.describe + "</td>";
-          output += "<td style='display: table-cell;'><i class='fa fa-pencil-square fa-lg' aria-hidden='true'></i>&nbsp;<i class='fa fa-trash fa-lg' aria-hidden='true'></i></td>";
+          output += "<td style='display: table-cell;'>" + editBtn + "&nbsp;" + delBtn;
           output += "</tr>";
         })
-
         $("#tableBodyData").html(output);
+
+        // show table pagination
         tablePagination();
       })
     }
 //=============================================================================
 //=============================================================================
+
 
 // table pagination
     function tablePagination() {
@@ -147,7 +226,7 @@
     	}
     }
 
-//compare values in columns
+// compare values in columns
     function compare(index) {
     	return function(a, b) {
     		var valA = $(a).children("td").eq(index).html();
@@ -158,10 +237,24 @@
 //=============================================================================
 //=============================================================================
 
-// hide/show form mechanism
-    function showForm() {
+  $(document).ready(function() {
 
-      $("#formHide").click(function(e) {
+    sessionStorage.removeItem("currentCaseId");
+
+    getData();
+    editData();
+    delData();
+
+    // save data to db & download to table
+    $("#btn").click(function(e) {
+      e.preventDefault();
+      $(this).html("DODAJ");
+      addData();
+      $("#formCaseAdd").find("input, select, textarea").val("");
+    })
+
+    // hide-show form function
+    $("#formHide").click(function(e) {
         e.preventDefault();
         if($("#buttonLabel").html() == "ZWIŃ FORMULARZ") {
           $("#buttonLabel").html("ROZWIŃ FORMULARZ");
@@ -174,26 +267,13 @@
         }
         $("#formCaseAdd").find(".row").toggleClass("d-none");
       })
-    }
-//=============================================================================
-//=============================================================================
 
-  $(document).ready(function() {
-
-    showForm();
-    getData();
-
-    $("#btn").click(function(e) {
-      e.preventDefault(e);
-      postData();
-      getData();
-      $("#formCaseAdd").find("input, select, textarea").val("");
-    })
-
+    // select max vissible table rows
     $("#numOfRows").on("change", function() {
       tablePagination();
     })
 
+    // sort table on click th & add sort ico
     $("th").click(function() {
       $("i.fa").removeClass("fa-sort-amount-desc");
       $("i.fa").removeClass("fa-sort-amount-asc");
