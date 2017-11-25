@@ -35,7 +35,7 @@
           // session storage value check
           if(sessionStorage.getItem("currentCaseId") != null) {
 
-            // set put metod for edit date
+            // set put metod for edit data
             var id = sessionStorage.getItem("currentCaseId"),
                 url = "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items/" + id + "?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy",
                 type = "PUT";
@@ -44,7 +44,6 @@
             // set post method for add data
             var url = "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy",
                 type = "POST";
-            $("#btn").html("DODAJ");
           }
 
           // send object to mongoDB
@@ -70,7 +69,6 @@
       // get data to edit
       $("body").on("click", "#setCase", function(e){
         e.preventDefault();
-        $("#formCaseAdd").find(".row").removeClass("d-none");
 
         // fill form by downloaded data
         sessionStorage.setItem("currentCaseId", $(this).data("id"));
@@ -84,6 +82,7 @@
 
         // change button label
         $("#btn").html("AKTUALIZUJ");
+        $("#formTitle").html("Aktualizuj wybraną pozycję");
       })
     }
 //=============================================================================
@@ -124,7 +123,7 @@
         // create table cells and fill them with data
         $.each(tableData, function(key, tableData) {
 
-          var editBtn = "<a id='setCase' href='' data-id='" +tableData._id.$oid+ "' data-casenum='" +tableData.casenum+ "' data-fname='" +tableData.fname+ "' data-lname='" +tableData.lname+ "' data-date='" +tableData.date+ "' data-place='" +tableData.place+ "' data-person='" +tableData.person+ "' data-describe='" +tableData.describe+ "'><i class='fa fa-pencil-square fa-lg' aria-hidden='true'></i></a>";
+          var editBtn = "<a id='setCase' href='' data-id='" +tableData._id.$oid+ "' data-casenum='" +tableData.casenum+ "' data-fname='" +tableData.fname+ "' data-lname='" +tableData.lname+ "' data-date='" +tableData.date+ "' data-place='" +tableData.place+ "' data-person='" +tableData.person+ "' data-describe='" +tableData.describe+ "'><i class='fa fa-pencil-square fa-lg' aria-hidden='true' data-toggle='modal' data-target='#addCaseFormModal'></i></a>";
 
           var delBtn = "<a id='delCase' href='' data-id='" +tableData._id.$oid+ "'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></a></td>";
 
@@ -147,7 +146,6 @@
     }
 //=============================================================================
 //=============================================================================
-
 
 // table pagination
     function tablePagination() {
@@ -237,50 +235,63 @@
 //=============================================================================
 //=============================================================================
 
-  $(document).ready(function() {
+// search words in rows
+    function searchInTable() {
 
-    sessionStorage.removeItem("currentCaseId");
+      $("#search").keyup(function() {
 
-    getData();
-    editData();
-    delData();
+          var searchText = $(this).val().toLowerCase();
 
-    // save data to db & download to table
-    $("#btn").click(function(e) {
-      e.preventDefault();
-      $(this).html("DODAJ");
-      addData();
-      $("#formCaseAdd").find("input, select, textarea").val("");
-    })
+          $.each($("#myTab tbody tr"), function() {
+            if($(this).text().toLowerCase().indexOf(searchText) === -1) {
+              $(this).hide();
+            } else {
+              $(this).show();
+            }
+          })
+        })
+      }
+//=============================================================================
+//=============================================================================
 
-    // hide-show form function
-    $("#formHide").click(function(e) {
+    $(document).ready(function() {
+
+      sessionStorage.removeItem("currentCaseId");
+
+      getData();
+      editData();
+      delData();
+      searchInTable();
+
+      // save data to db & download to table
+      $("#btn").on("click", function(e) {
         e.preventDefault();
-        if($("#buttonLabel").html() == "ZWIŃ FORMULARZ") {
-          $("#buttonLabel").html("ROZWIŃ FORMULARZ");
-          $(this).find(".fa").removeClass("fa-angle-double-up");
-          $(this).find(".fa").addClass("fa-angle-double-down");
-        } else {
-          $("#buttonLabel").html("ZWIŃ FORMULARZ");
-          $(this).find(".fa").removeClass("fa-angle-double-down");
-          $(this).find(".fa").addClass("fa-angle-double-up");
-        }
-        $("#formCaseAdd").find(".row").toggleClass("d-none");
+        $(this).html("DODAJ");
+        $("#formTitle").html("Dodaj nową pozycję");
+        addData();
+        $("#formCaseAdd").find("input, select, textarea").val("");
       })
 
-    // select max vissible table rows
-    $("#numOfRows").on("change", function() {
-      tablePagination();
-    })
+      // select max vissible table rows
+      $("#numOfRows").on("change", function() {
+        tablePagination();
+      })
 
-    // sort table on click th & add sort ico
-    $("th").click(function() {
-      $("i.fa").removeClass("fa-sort-amount-desc");
-      $("i.fa").removeClass("fa-sort-amount-asc");
-      sortTable($("#myTab"), $(this));
+      // sort table on click th & add sort ico
+      $("th").on("click", function() {
+        $("i.fa").removeClass("fa-sort-amount-desc");
+        $("i.fa").removeClass("fa-sort-amount-asc");
+        sortTable($("#myTab"), $(this));
+      });
+
+      //clear session storage & values in form after close update form
+      $("body").on("click", "#formClose", function() {
+        sessionStorage.removeItem("currentCaseId");
+        $("#formCaseAdd").find("input, select, textarea").val("");
+        $("#formTitle").html("Dodaj nową pozycję");
+        $("#btn").html("DODAJ");
+      })
+
     });
-
-  });
-
 
 })();

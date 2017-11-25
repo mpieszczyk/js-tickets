@@ -13,69 +13,26 @@
 <body>
   <div class="container">
 
-    <!-- form section -->
-    <section id="sectionForm" class="card text-primary card border-primary mt-5">
-      <form id="formCaseAdd" class="card-body">
-        <button id="formHide" class="btn btn-secondary hidden"><span id="buttonLabel">ROZWIŃ FORMULARZ</span>&nbsp;<i class="fa fa-angle-double-down" aria-hidden="true"></i>
-</button>
-        <hr />
-        <div class="row d-none">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-form-label" for="inputFormCaseNumber">Nr sprawy</label>
-              <input type="number" class="form-control form-control-sm" name="casenum" id="inputFormCaseNumber" placeholder="Numer sprawy">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label" for="inputFormFirstName">Imię</label>
-              <input type="text" class="form-control form-control-sm" name="fname" id="inputFormFirstName" placeholder="Imię">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label" for="inputFormCasePlace">Miejsce</label>
-              <input type="text" class="form-control form-control-sm" name="place" id="inputFormCasePlace" placeholder="Miejsce">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-form-label" for="inputFormCasePerson">Osoba przyjmująca sprawę</label>
-              <select class="form-control form-control-sm" name="person" id="inputFormCasePerson">
-                <option disabled selected value> --wybierz-- </option>
-                <option value="Mateusz">Mateusz</option>
-                <option value="Anna">Anna</option>
-                <option value="Katarzyna">Katarzyna</option>
-                <option value="Wojciech">Wojciech</option>
-                <option value="Jagoda">Jagoda</option>
-                <option value="Karolina">Karolina</option>
-                <option value="Monika">Monika</option>
-                <option value="Piotr">Piotr</option>
-                <option value="Agnieszka">Agnieszka</option>
-                <option value="Adrianna">Adrianna</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="col-form-label" for="inputFormLastName">Nazwisko</label>
-              <input type="text" class="form-control form-control-sm" name="lname" id="inputFormLastName" placeholder="Nazwisko">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label" for="inputFormCaseDate">Data</label>
-              <input type="date" class="form-control form-control-sm" name="date" id="inputFormCaseDate" placeholder="Data">
-            </div>
-          </div>
-        </div>
-        <div class="row d-none">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label class="col-form-label" for="inputFormCaseDesc">Opis</label>
-              <textarea class="form-control form-control-sm" name="describe" id="inputFormCaseDesc" placeholder="Opis" rows="3"></textarea>
-            </div>
-            <button id="btn" type="submit" class="btn btn-primary float-right">DODAJ</button>
-          </div>
-        </div>
-      </form>
-    </section>
-
     <!-- table section -->
     <section id="sectionTable" class="card text-primary card border-primary text-muted mt-5">
+
+      <!-- table header with add button & search input -->
       <div class="table-responsive card-body">
+        <div class="row">
+          <div class="col-md-2 col-sm-2">
+            <button type="button" id="openFormModal" class="btn btn-primary" data-toggle="modal" data-target="#addCaseFormModal">DODAJ</button>
+          </div>
+          <div class="col-md-4 offset-md-6 col-sm-6 offset-sm-4">
+            <div class="input-group float-right">
+              <span class="input-group-addon" id="searchInput"><i class="fa fa-search" aria-hidden="true"></i></span>
+              <input type="text" id="search" class="form-control" placeholder="Wyszukaj" aria-label="Wyszukaj" aria-describedby="searchInput">
+            </div>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- table -->
         <table id="myTab" class="table">
         	<thead class="bg-primary text-white">
           	<tr>
@@ -94,12 +51,12 @@
       </div>
 
       <!-- pagination -->
-      <nav class="card-body form-row">
-        <ul class="pagination col-md-10">
-        </ul>
-        <div class="form-group bg-secondary form-row">
-          <label class="col-form-label col-form-label-sm col-md-6" for="numOfRows">Ilość wierszy&nbsp;</label>
-          <select class="form-control form-control-sm col-md-6" name="numOfRows" id="numOfRows">
+      <nav class="card-body row">
+        <div class="col-md-11 col-sm-10">
+          <ul class="pagination"></ul>
+        </div>
+        <div class="col-md-1 col-sm-2">
+          <select class="form-control form-control-sm" name="numOfRows" id="numOfRows">
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="40">40</option>
@@ -111,8 +68,81 @@
     </section>
   </div>
 
+  <!-- form section -->
+  <section id="sectionForm">
+    <div class="modal fade" id="addCaseFormModal" tabindex="-1" role="dialog" aria-labelledby="addCaseFormModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formTitle">Dodaj nową pozycję</h5>
+            <button type="button" id="formClose" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="formCaseAdd">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputFormCaseNumber">Nr sprawy</label>
+                    <input type="number" class="form-control" name="casenum" id="inputFormCaseNumber" placeholder="Numer sprawy">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputFormFirstName">Imię</label>
+                    <input type="text" class="form-control" name="fname" id="inputFormFirstName" placeholder="Imię">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputFormCasePlace">Miejsce</label>
+                    <input type="text" class="form-control" name="place" id="inputFormCasePlace" placeholder="Miejsce">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputFormCasePerson">Osoba przyjmująca sprawę</label>
+                    <select class="form-control" name="person" id="inputFormCasePerson">
+                      <option disabled selected value> --wybierz-- </option>
+                      <option value="Mateusz">Mateusz</option>
+                      <option value="Anna">Anna</option>
+                      <option value="Katarzyna">Katarzyna</option>
+                      <option value="Wojciech">Wojciech</option>
+                      <option value="Jagoda">Jagoda</option>
+                      <option value="Karolina">Karolina</option>
+                      <option value="Monika">Monika</option>
+                      <option value="Piotr">Piotr</option>
+                      <option value="Agnieszka">Agnieszka</option>
+                      <option value="Adrianna">Adrianna</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputFormLastName">Nazwisko</label>
+                    <input type="text" class="form-control" name="lname" id="inputFormLastName" placeholder="Nazwisko">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputFormCaseDate">Data</label>
+                    <input type="date" class="form-control" name="date" id="inputFormCaseDate" placeholder="Data">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputFormCaseDesc">Opis</label>
+                    <textarea class="form-control" name="describe" id="inputFormCaseDesc" placeholder="Opis" rows="3"></textarea>
+                  </div>
+                  <button id="btn" type="submit" data-dismiss="modal" class="btn btn-primary float-right">DODAJ</button>
+                  <button id="formClose" type="button" class="btn btn-secondary float-right" data-dismiss="modal">Zamknij</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- scripts -->
   <script src="assets/js/jquery-3.2.1.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/main.min.js"></script>
 </body>
 
