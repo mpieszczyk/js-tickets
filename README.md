@@ -1,4 +1,4 @@
-# maf
+# js-tickets
 
 A special "system" for case/problem management, which was created at the request of a friend.
 
