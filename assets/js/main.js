@@ -113,10 +113,29 @@
 //=============================================================================
 //=============================================================================
 
+// get password
+// session storage value check
+function getUrlPass() {
+  $("#sectionLoginForm button:submit").click(function(e) {
+    e.preventDefault();
+    var PassVal = $("input:password").val();
+    if ((sessionStorage.getItem("sysPass")) === null || undefined ) {
+      //mXAw30Qy
+      sessionStorage.setItem("sysPass", PassVal);
+      getData();
+      $("#sectionTable").removeClass("invisible");
+      $("#sectionLoginForm").remove();
+    }
+  })
+}
+
 // get data from db
     function getData() {
+      var sessionPass = sessionStorage.getItem("sysPass"),
+                  SessionUrl = "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJ" + sessionPass;
+
       $.ajax({
-        url: "https://api.mongolab.com/api/1/databases/case-add-form/collections/case-add-form-items?apiKey=VLJbjCcSjJW8puhnqe4oFQfJmXAw30Qy"
+        url: SessionUrl
       }).done(function(tableData) {
         var output;
 
@@ -139,7 +158,6 @@
           output += "</tr>";
         })
         $("#tableBodyData").html(output);
-
         // show table pagination
         tablePagination();
       })
@@ -256,9 +274,18 @@
 
     $(document).ready(function() {
 
+      if (sessionStorage.getItem("sysPass")) {
+        $("#sectionTable").removeClass("invisible");
+        $("#sectionLoginForm").remove();
+        getData();
+        //mXAw30Qy
+      }
+      else {
+        getUrlPass();
+      }
+
       sessionStorage.removeItem("currentCaseId");
 
-      getData();
       editData();
       delData();
       searchInTable();
