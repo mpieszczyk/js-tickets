@@ -7,10 +7,12 @@ After completing the form, the system connects to the MongoDB database API creat
 
 At this moment the table has features like:
 
-– login form (password: mXAw30Qy)
-– options to select the number of displayed lines with pagination,
-– it is sortable,
-– it has phrase search engine,
-– data can be edited or deleted.
+<ul>
+<li>login form (password: mXAw30Qy)</li>
+<li>options to select the number of displayed lines with pagination,</li>
+<li>it is sortable,</li>
+<li>it has phrase search engine,</li>
+<li>data can be edited or deleted.</li>
+</ul>
 
 The entire code was written in JS, exactly jQuery with AJAX, HTML5 and BOOTSTRAP framework.
