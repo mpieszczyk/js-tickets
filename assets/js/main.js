@@ -37,12 +37,12 @@
 
             // set put metod for edit data
             var id = sessionStorage.getItem("currentCaseId"),
-                url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/" + id + "?apiKey=628e5299dffa093e91281ac8",
+                url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne" + id + "?api-key=628e5299dffa093e91281ac8",
                 type = "PUT";
           } else {
 
             // set post method for add data
-            var url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta?apiKey=628e5299dffa093e91281ac8",
+            var url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne?api-key=628e5299dffa093e91281ac8",
                 type = "POST";
           }
 
@@ -96,7 +96,7 @@
         e.preventDefault();
 
         var id = $(this).data('id'),
-            url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/" + id + "?apiKey=628e5299dffa093e91281ac8";
+            url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne" + id + "?api-key=628e5299dffa093e91281ac8";
 
         // del object from mongoDB
         $.ajax({
@@ -132,7 +132,7 @@ function getUrlPass() {
 // get data from db
     function getData() {
       var sessionPass = sessionStorage.getItem("sysPass"),
-                  SessionUrl = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta?apiKey=628e5299dffa093e91281ac8" + sessionPass;
+                  SessionUrl = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne?api-key=628e5299dffa093e91281ac8" + sessionPass;
 
       $.ajax({
         url: SessionUrl
