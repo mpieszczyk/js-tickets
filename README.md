@@ -5,7 +5,7 @@ A special "system" for tickets management, which was created to learn JS.
 
 Currently app has no DB connected - need to find other solution, because mlab isn't longer available.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 After completing the form, the system connects to the MongoDB database API created on mlab.com and adds data to the JSON object, then automatically retrieves all data and displays it in the table.
 
