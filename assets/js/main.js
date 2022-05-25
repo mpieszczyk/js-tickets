@@ -1,5 +1,57 @@
 (function() {
     
+// get password
+// session storage value check
+function getUrlPass() {
+  $("#sectionLoginForm button:submit").click(function(e) {
+    e.preventDefault();
+    var PassVal = $("input:password").val();
+    if ((sessionStorage.getItem("sysPass")) === null || undefined ) {
+      //mXAw30Qy
+      sessionStorage.setItem("sysPass", PassVal);
+      getData();
+      $("#sectionTable").removeClass("invisible");
+      $("#sectionLoginForm").remove();
+    }
+  })
+}
+
+// get data from db
+    function getData() {
+      var sessionPass = sessionStorage.getItem("sysPass"),
+                  SessionUrl = "" + sessionPass;
+
+      $.ajax({
+        url: SessionUrl
+      }).done(function(tableData) {
+        var output;
+
+        // create table cells and fill them with data
+        $.each(tableData, function(key, tableData) {
+
+          var editBtn = "<a id='setCase' href='' data-id='" +tableData._id.$oid+ "' data-casenum='" +tableData.casenum+ "' data-fname='" +tableData.fname+ "' data-lname='" +tableData.lname+ "' data-date='" +tableData.date+ "' data-place='" +tableData.place+ "' data-person='" +tableData.person+ "' data-describe='" +tableData.describe+ "'><i class='fa fa-pencil-square fa-lg' aria-hidden='true' data-toggle='modal' data-target='#addCaseFormModal'></i></a>";
+
+          var delBtn = "<a id='delCase' href='' data-id='" +tableData._id.$oid+ "'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></a></td>";
+
+          output += "<tr class='table-active'>";
+          output += "<td style='display: table-cell;'>" + tableData.casenum + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.fname + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.lname + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.date + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.place + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.person + "</td>";
+          output += "<td style='display: table-cell;'>" + tableData.describe + "</td>";
+          output += "<td style='display: table-cell;'>" + editBtn + "&nbsp;" + delBtn;
+          output += "</tr>";
+        })
+        $("#tableBodyData").html(output);
+        // show table pagination
+        tablePagination();
+      })
+    }
+//=============================================================================
+//=============================================================================
+    
 //post data to db
     function addData() {
 
@@ -113,57 +165,6 @@
 //=============================================================================
 //=============================================================================
 
-// get password
-// session storage value check
-function getUrlPass() {
-  $("#sectionLoginForm button:submit").click(function(e) {
-    e.preventDefault();
-    var PassVal = $("input:password").val();
-    if ((sessionStorage.getItem("sysPass")) === null || undefined ) {
-      //mXAw30Qy
-      sessionStorage.setItem("sysPass", PassVal);
-      getData();
-      $("#sectionTable").removeClass("invisible");
-      $("#sectionLoginForm").remove();
-    }
-  })
-}
-
-// get data from db
-    function getData() {
-      var sessionPass = sessionStorage.getItem("sysPass"),
-                  SessionUrl = "" + sessionPass;
-
-      $.ajax({
-        url: SessionUrl
-      }).done(function(tableData) {
-        var output;
-
-        // create table cells and fill them with data
-        $.each(tableData, function(key, tableData) {
-
-          var editBtn = "<a id='setCase' href='' data-id='" +tableData._id.$oid+ "' data-casenum='" +tableData.casenum+ "' data-fname='" +tableData.fname+ "' data-lname='" +tableData.lname+ "' data-date='" +tableData.date+ "' data-place='" +tableData.place+ "' data-person='" +tableData.person+ "' data-describe='" +tableData.describe+ "'><i class='fa fa-pencil-square fa-lg' aria-hidden='true' data-toggle='modal' data-target='#addCaseFormModal'></i></a>";
-
-          var delBtn = "<a id='delCase' href='' data-id='" +tableData._id.$oid+ "'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></a></td>";
-
-          output += "<tr class='table-active'>";
-          output += "<td style='display: table-cell;'>" + tableData.casenum + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.fname + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.lname + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.date + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.place + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.person + "</td>";
-          output += "<td style='display: table-cell;'>" + tableData.describe + "</td>";
-          output += "<td style='display: table-cell;'>" + editBtn + "&nbsp;" + delBtn;
-          output += "</tr>";
-        })
-        $("#tableBodyData").html(output);
-        // show table pagination
-        tablePagination();
-      })
-    }
-//=============================================================================
-//=============================================================================
 
 // table pagination
     function tablePagination() {
