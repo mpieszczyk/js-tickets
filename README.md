@@ -8,7 +8,6 @@ After completing the form, the system connects to the MongoDB database API creat
 At this moment the table has features like:
 
 <ul>
-<li>login form (password: mXAw30Qy)</li>
 <li>options to select the number of displayed lines with pagination,</li>
 <li>it is sortable,</li>
 <li>it has phrase search engine,</li>
@@ -16,3 +15,5 @@ At this moment the table has features like:
 </ul>
 
 The entire code was written in JS, exactly jQuery with AJAX, HTML5 and BOOTSTRAP framework.
+
+Currently app has no DB connected - need to find other solution, because mlab isn't longer available.
