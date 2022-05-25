@@ -1,35 +1,5 @@
 (function() {
     
-var axios = require('axios');
-var data = JSON.stringify({
-    "collection": "case-form",
-    "database": "case-form",
-    "dataSource": "js-ticket",
-    "projection": {
-        "_id": 1
-    }
-});
-            
-var config = {
-    method: 'post',
-    url: 'https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne',
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Request-Headers': '*',
-        'api-key': '<API_KEY>'
-    },
-    data : data
-};
-            
-axios(config)
-    .then(function (response) {
-        console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-    
-    
 //post data to db
     function addData() {
 
@@ -67,12 +37,12 @@ axios(config)
 
             // set put metod for edit data
             var id = sessionStorage.getItem("currentCaseId"),
-                url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne" + id + "?api-key=628e5299dffa093e91281ac8",
+                url = "" + id + "",
                 type = "PUT";
           } else {
 
             // set post method for add data
-            var url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne?api-key=628e5299dffa093e91281ac8",
+            var url = "",
                 type = "POST";
           }
 
@@ -126,7 +96,7 @@ axios(config)
         e.preventDefault();
 
         var id = $(this).data('id'),
-            url = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne" + id + "?api-key=628e5299dffa093e91281ac8";
+            url = "" + id + "";
 
         // del object from mongoDB
         $.ajax({
@@ -162,7 +132,7 @@ function getUrlPass() {
 // get data from db
     function getData() {
       var sessionPass = sessionStorage.getItem("sysPass"),
-                  SessionUrl = "https://data.mongodb-api.com/app/data-nvmza/endpoint/data/beta/action/findOne?api-key=628e5299dffa093e91281ac8" + sessionPass;
+                  SessionUrl = "" + sessionPass;
 
       $.ajax({
         url: SessionUrl
